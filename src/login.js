@@ -1,13 +1,13 @@
 import { config } from "dotenv";
 config();
 
-if (!process.env.SUPABASE_EMAIL || !process.env.SUPABASE_PASSWORD || !process.env.SUPABASE_API_KEY) {
-	console.error("Missing environment variables");
+if (!process.env.SUPABASE_EMAIL || !process.env.SUPABASE_PASSWORD || !process.env.SUPABASE_API_KEY || !process.env.SUPABASE_URL_LOGIN) {
+	console.error("Missing environment variables: ");
 }
 
 async function login() {
 	const response = await fetch(
-		"https://mynxlubykylncinttggu.supabase.co/auth/v1/signup",
+		process.env.SUPABASE_URL_LOGIN,
 		{
 			method: "POST",
 			headers: {
@@ -17,9 +17,6 @@ async function login() {
 			body: JSON.stringify({
 				email: process.env.SUPABASE_EMAIL,
 				password: process.env.SUPABASE_PASSWORD,
-				data: {
-					nome: "Felipe de Souza Gomes",
-				},
 			}),
 		},
 	);
